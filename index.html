@@ -43,10 +43,6 @@
         <img src="assets/logos/dafcgoc-logo.png" alt="" width="50" height="36">
         <span class="brand__name">Think Tank</span>
       </a>
-      <nav class="site-nav" aria-label="Sections">
-        <a href="#topics">Topics</a>
-        <a href="#process">Process</a>
-      </nav>
       <a class="btn btn--primary btn--sm" href="#join">Join a cohort</a>
     </div>
   </header>
@@ -57,53 +53,50 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__field" aria-hidden="true"></div>
       <div class="hero__lit" aria-hidden="true"></div>
-      <div class="container hero__inner">
-        <h1 id="hero-title"><span>Research by CGOs.</span> <span>Briefed to senior leaders.</span></h1>
-        <p class="hero__lead">
-          The Think Tank is the DAF CGOC's research program. Cohorts of Lieutenants and
-          Captains take on the questions Air Force senior leaders have set as priorities,
-          write the paper, and present it.
-        </p>
-        <div class="hero__cta">
-          <a class="btn btn--primary" href="#join">Join a research cohort</a>
-          <a class="btn btn--ghost" href="#topics">See the topics</a>
-        </div>
-        <p class="hero__partner">In partnership with Air University</p>
-      </div>
 
       <!-- The five steps as one climb. Decorative: #process carries the same steps as text. -->
-      <div class="container">
-        <svg class="climb" viewBox="0 0 1200 290" aria-hidden="true">
-          <defs>
-            <linearGradient id="climb-chrome" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#8FA3CC" stop-opacity=".35"/>
-              <stop offset=".55" stop-color="#DCE5F7"/>
-              <stop offset="1" stop-color="#FFFFFF"/>
-            </linearGradient>
-          </defs>
-          <path class="climb__track" d="M40 228 C380 228 760 176 1160 36" pathLength="1"/>
-          <path class="climb__line" d="M40 228 C380 228 760 176 1160 36" pathLength="1"/>
-          <path class="climb__glint" d="M40 228 C380 228 760 176 1160 36" pathLength="1"/>
-          <g class="climb__stop" style="--i:0"><circle cx="70.7" cy="227.9" r="6"/><text x="70.7" y="262"><tspan class="climb__n">01</tspan><tspan class="climb__label" dx="8">Match</tspan></text></g>
-          <g class="climb__stop" style="--i:1"><circle cx="318.4" cy="216.4" r="6"/><text x="318.4" y="251"><tspan class="climb__n">02</tspan><tspan class="climb__label" dx="8">Kick-off</tspan></text></g>
-          <g class="climb__stop" style="--i:2"><circle cx="577.5" cy="184.5" r="6"/><text x="577.5" y="219"><tspan class="climb__n">03</tspan><tspan class="climb__label" dx="8">Research</tspan></text></g>
-          <g class="climb__stop" style="--i:3"><circle cx="846.6" cy="129.4" r="6"/><text x="846.6" y="164"><tspan class="climb__n">04</tspan><tspan class="climb__label" dx="8">Review</tspan></text></g>
-          <g class="climb__stop climb__stop--end" style="--i:4"><circle cx="1124.1" cy="48.4" r="8"/><text x="1100" y="30"><tspan class="climb__n">05</tspan><tspan class="climb__label" dx="8">Publish and present</tspan></text></g>
-        </svg>
+      <svg class="climb" viewBox="0 0 1200 300" aria-hidden="true">
+        <defs>
+          <linearGradient id="climb-chrome" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#8FA3CC" stop-opacity=".25"/>
+            <stop offset=".5" stop-color="#DCE5F7"/>
+            <stop offset="1" stop-color="#FFFFFF"/>
+          </linearGradient>
+          <linearGradient id="climb-fill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#3B74FF" stop-opacity=".45"/>
+            <stop offset="1" stop-color="#3B74FF" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path class="climb__area" d="M-40 270 C380 270 780 215 1240 30 L1240 300 L-40 300 Z"/>
+        <path class="climb__line" d="M-40 270 C380 270 780 215 1240 30" pathLength="1"/>
+        <path class="climb__glint" d="M-40 270 C380 270 780 215 1240 30" pathLength="1"/>
+        <g class="climb__stop" style="--i:0"><circle class="climb__ring" cx="110.5" cy="267.5" r="15"/><circle class="climb__dot" cx="110.5" cy="267.5" r="6"/><text x="96.5" y="245.5"><tspan class="climb__n">01</tspan><tspan class="climb__label" dx="8">Match</tspan></text></g>
+        <g class="climb__stop" style="--i:1"><circle class="climb__ring" cx="347.2" cy="251.9" r="15"/><circle class="climb__dot" cx="347.2" cy="251.9" r="6"/><text x="333.2" y="229.9"><tspan class="climb__n">02</tspan><tspan class="climb__label" dx="8">Kick-off</tspan></text></g>
+        <g class="climb__stop" style="--i:2"><circle class="climb__ring" cx="585.0" cy="219.4" r="15"/><circle class="climb__dot" cx="585.0" cy="219.4" r="6"/><text x="571.0" y="197.4"><tspan class="climb__n">03</tspan><tspan class="climb__label" dx="8">Research</tspan></text></g>
+        <g class="climb__stop" style="--i:3"><circle class="climb__ring" cx="827.1" cy="166.8" r="15"/><circle class="climb__dot" cx="827.1" cy="166.8" r="6"/><text x="813.1" y="144.8"><tspan class="climb__n">04</tspan><tspan class="climb__label" dx="8">Review</tspan></text></g>
+        <g class="climb__stop climb__stop--end" style="--i:4"><circle class="climb__ring" cx="1076.9" cy="91.1" r="22"/><circle class="climb__dot" cx="1076.9" cy="91.1" r="9"/><text x="1062.9" y="61.1"><tspan class="climb__n">05</tspan><tspan class="climb__label" dx="8">Publish and present</tspan></text></g>
+      </svg>
+
+      <div class="container hero__inner">
+        <h1 id="hero-title"><span>RESEARCH BY CGOs.</span> <span class="hero__gold">BRIEFED TO SENIOR LEADERS.</span></h1>
+        <div class="hero__foot">
+          <a class="btn btn--primary" href="#join">Join a research cohort</a>
+          <p class="hero__partner">In partnership with Air University</p>
+        </div>
       </div>
     </section>
 
-    <!-- ============ Mission ============ -->
+    <!-- ============ Mission: one held screen ============ -->
     <section class="mission" aria-labelledby="mission-title">
-      <div class="container mission__inner">
-        <h2 id="mission-title" class="say"><span>FOR</span> <span>CGOs.</span><br><span>SUPPORTED</span><br><span>BY</span> <span>CGOs.</span></h2>
-        <div class="mission__body">
-          <p>
+      <div class="mission__stage">
+        <div class="container mission__inner">
+          <p class="mission__note mission__note--a">
             The Think Tank is the Department of the Air Force Company Grade Officers' Council
             (DAF CGOC) premier research opportunity. It fosters a collaborative environment to
             drive innovative solutions and proposals among the Company Grade Officer cohort.
           </p>
-          <p>
+          <h2 id="mission-title" class="say"><span>FOR</span> <span>CGOs.</span><br><span>SUPPORTED</span> <span>BY</span> <span>CGOs.</span></h2>
+          <p class="mission__note mission__note--b">
             Our mission is to increase research accessibility and opportunity for our young
             officers.
           </p>
@@ -111,74 +104,98 @@
       </div>
     </section>
 
-    <!-- ============ Topics ============ -->
-    <section id="topics" class="section" aria-labelledby="topics-title">
-      <div class="container topics">
-        <div class="topics__text">
+    <!-- ============ Topics: the twelve areas on Air University's list ============ -->
+    <section id="topics" class="topics" aria-labelledby="topics-title">
+      <div class="container">
+        <div class="topics__head">
           <h2 id="topics-title">Pick a question from Air University's list.</h2>
-          <p>
-            Through our partnership with Air University, cohorts choose from Air University's
-            complete list of research topics: the priorities of our Air Force senior leaders.
-          </p>
+          <div class="topics__lede">
+            <p>
+              Through our partnership with Air University, cohorts choose from Air University's
+              complete list of research topics: the priorities of our Air Force senior leaders.
+            </p>
+            <p>
+              The list is made up of questions given to Air University by organizations in the
+              Air Force and across the Department of Defense. It held more than 300 questions
+              in October 2026, sorted into twelve areas.
+            </p>
+          </div>
         </div>
-        <a class="outlink" id="au-topics" href="https://www.airuniversity.af.edu/Office-of-Sponsored-Programs/Research/" target="_blank" rel="noopener">
-          <span class="outlink__title">Air University research topics<span class="sr-only"> (opens in a new tab)</span></span>
-          <span class="outlink__host">airuniversity.af.edu</span>
-          <svg class="outlink__arrow" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============ Process ============ -->
-    <section id="process" class="section section--process" aria-labelledby="process-title">
-      <div class="container process">
-        <div class="process__head">
-          <h2 id="process-title">From cohort to Presentation Day.</h2>
-          <p>Five steps, with Air University and the Think Tank Committee alongside the whole way.</p>
-        </div>
-        <ol class="steps">
-          <li class="step">
-            <span class="step__n" aria-hidden="true">01</span>
-            <h3>Match</h3>
-            <p>The final CGO cohort is matched, and Air University receives the list of participants.</p>
-          </li>
-          <li class="step">
-            <span class="step__n" aria-hidden="true">02</span>
-            <h3>Kick-off</h3>
-            <p>Our Think Tank Committee leads hold a kick-off call with each cohort and set expectations and timelines.</p>
-          </li>
-          <li class="step">
-            <span class="step__n" aria-hidden="true">03</span>
-            <h3>Research</h3>
-            <p>Research begins, with routine check-ins with an Air University research expert and the Think Tank Committee.</p>
-          </li>
-          <li class="step">
-            <span class="step__n" aria-hidden="true">04</span>
-            <h3>Review</h3>
-            <p>The paper is completed and submitted to Air University and the Think Tank Committee for vetting and final review.</p>
-          </li>
-          <li class="step step--end">
-            <span class="step__n" aria-hidden="true">05</span>
-            <h3>Publish and present</h3>
-            <p>The paper is published, and Air University sets up a Presentation Day for the cohort to brief senior Air Force leadership.</p>
-          </li>
+        <p class="areas__key" aria-hidden="true"><span>Topic area</span><span>One question on the list today</span></p>
+        <ol class="areas">
+          <li><span class="areas__n" aria-hidden="true">01</span><span class="areas__name">China</span><span class="areas__eg">Historic PRC–Taiwan Provocation Cycle</span></li>
+          <li><span class="areas__n" aria-hidden="true">02</span><span class="areas__name">Russia/Ukraine</span><span class="areas__eg">Russian Way of War: Military Logistics and Sustainment</span></li>
+          <li><span class="areas__n" aria-hidden="true">03</span><span class="areas__name">Competition</span><span class="areas__eg">Intelligence in Strategic Competition</span></li>
+          <li><span class="areas__n" aria-hidden="true">04</span><span class="areas__name">Emerging Technology</span><span class="areas__eg">Future Space-Based ISR Capabilities</span></li>
+          <li><span class="areas__n" aria-hidden="true">05</span><span class="areas__name">AI/ML &amp; Automation</span><span class="areas__eg">Human-Machine Teaming and the Human-Technology Interface</span></li>
+          <li><span class="areas__n" aria-hidden="true">06</span><span class="areas__name">Airpower Concepts</span><span class="areas__eg">Light and Lean: ACE Maneuver Unit Footprint Reduction</span></li>
+          <li><span class="areas__n" aria-hidden="true">07</span><span class="areas__name">Nuclear</span><span class="areas__eg">Public Opinion and Nuclear Deterrence</span></li>
+          <li><span class="areas__n" aria-hidden="true">08</span><span class="areas__name">Joint Warfighting</span><span class="areas__eg">Joint Force Design and Concepts</span></li>
+          <li><span class="areas__n" aria-hidden="true">09</span><span class="areas__name">Whole of Society</span><span class="areas__eg">Metrics of Industrial Base Capacity</span></li>
+          <li><span class="areas__n" aria-hidden="true">10</span><span class="areas__name">Allies &amp; Partners</span><span class="areas__eg">Dependence of United States Air Force on its Allies and Partners</span></li>
+          <li><span class="areas__n" aria-hidden="true">11</span><span class="areas__name">Talent Management</span><span class="areas__eg">Recruiting, Readiness, and the All-Volunteer Force</span></li>
+          <li><span class="areas__n" aria-hidden="true">12</span><span class="areas__name">Leadership &amp; Decisions</span><span class="areas__eg">Leadership in Combat Wings</span></li>
         </ol>
-        <a class="btn btn--primary process__cta" href="#join">Join a research cohort</a>
+      </div>
+      <a class="bigrow" id="au-topics" href="https://www.airuniversity.af.edu/Office-of-Sponsored-Programs/Research/" target="_blank" rel="noopener">
+        <span class="bigrow__text">Air University research topics<span class="sr-only"> (opens in a new tab)</span>
+          <svg class="bigrow__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg>
+        </span>
+      </a>
+      <div class="container">
+        <p class="topics__note">
+          The list changes as organizations submit new questions. For every question, the papers
+          already written on each, and the current version, use Air University's page.
+        </p>
       </div>
     </section>
 
-    <!-- ============ Join ============ -->
-    <section id="join" class="section section--join" aria-labelledby="join-title">
-      <div class="container join">
+    <!-- ============ Process: held frame, steps travel sideways ============ -->
+    <section id="process" class="process" aria-labelledby="process-title">
+      <div class="process__stage">
+        <div class="process__track">
+          <div class="panel panel--intro">
+            <h2 id="process-title">From cohort to Presentation Day.</h2>
+            <p>Five steps, with Air University and the Think Tank Committee alongside the whole way.</p>
+          </div>
+          <ol class="process__steps">
+            <li class="panel">
+              <span class="panel__n" aria-hidden="true">01</span>
+              <h3>Match</h3>
+              <p>The final CGO cohort is matched, and Air University receives the list of participants.</p>
+            </li>
+            <li class="panel">
+              <span class="panel__n" aria-hidden="true">02</span>
+              <h3>Kick-off</h3>
+              <p>Our Think Tank Committee leads hold a kick-off call with each cohort and set expectations and timelines.</p>
+            </li>
+            <li class="panel">
+              <span class="panel__n" aria-hidden="true">03</span>
+              <h3>Research</h3>
+              <p>Research begins, with routine check-ins with an Air University research expert and the Think Tank Committee.</p>
+            </li>
+            <li class="panel">
+              <span class="panel__n" aria-hidden="true">04</span>
+              <h3>Review</h3>
+              <p>The paper is completed and submitted to Air University and the Think Tank Committee for vetting and final review.</p>
+            </li>
+            <li class="panel panel--end">
+              <span class="panel__n" aria-hidden="true">05</span>
+              <h3>Publish and present</h3>
+              <p>The paper is published, and Air University sets up a Presentation Day for the cohort to brief senior Air Force leadership.</p>
+            </li>
+          </ol>
+        </div>
+        <div class="process__bar" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
+    <!-- ============ Join: the blue sheet ============ -->
+    <section id="join" class="join" aria-labelledby="join-title">
+      <div class="container join__inner">
         <div class="join__text">
           <h2 id="join-title">Join a CGO research cohort.</h2>
-          <p>
-            The Think Tank Committee matches cohorts and will contact you at the email you give.
-          </p>
-          <p class="join__privacy">
-            Your details are used only to run the Think Tank. They are seen by DAF CGOC program
-            administrators, and by Air University once your cohort is confirmed.
-          </p>
+          <p>The Think Tank Committee matches cohorts and will contact you at the email you give.</p>
         </div>
 
         <div class="join__formwrap">
@@ -195,36 +212,33 @@
           <form id="intake-form" class="join-form" novalidate>
             <div id="error-summary" class="error-summary" tabindex="-1" hidden></div>
 
-            <fieldset class="fs">
-              <legend>Your details</legend>
-              <div class="grid-2">
-                <div class="field">
-                  <label for="rank">Rank <span class="req" aria-hidden="true">*</span></label>
-                  <select id="rank" name="rank" required autocomplete="off">
-                    <option value="" selected disabled>Select rank</option>
-                    <option>2d Lt</option>
-                    <option>1st Lt</option>
-                    <option>Capt</option>
-                  </select>
-                  <p class="field-error" id="rank-error" aria-live="polite"></p>
-                </div>
-                <div class="field">
-                  <label for="email">Preferred email <span class="req" aria-hidden="true">*</span></label>
-                  <input id="email" name="email" type="email" required maxlength="120" autocomplete="email" inputmode="email" enterkeyhint="next" placeholder="name@us.af.mil">
-                  <p class="field-error" id="email-error" aria-live="polite"></p>
-                </div>
-                <div class="field">
-                  <label for="first">First name <span class="req" aria-hidden="true">*</span></label>
-                  <input id="first" name="firstName" type="text" required maxlength="60" autocomplete="given-name" enterkeyhint="next">
-                  <p class="field-error" id="first-error" aria-live="polite"></p>
-                </div>
-                <div class="field">
-                  <label for="last">Last name <span class="req" aria-hidden="true">*</span></label>
-                  <input id="last" name="lastName" type="text" required maxlength="60" autocomplete="family-name" enterkeyhint="next">
-                  <p class="field-error" id="last-error" aria-live="polite"></p>
-                </div>
+            <div class="grid-2">
+              <div class="field">
+                <label for="rank">Rank <span class="req" aria-hidden="true">*</span></label>
+                <select id="rank" name="rank" required autocomplete="off">
+                  <option value="" selected disabled>Select rank</option>
+                  <option>2d Lt</option>
+                  <option>1st Lt</option>
+                  <option>Capt</option>
+                </select>
+                <p class="field-error" id="rank-error" aria-live="polite"></p>
               </div>
-            </fieldset>
+              <div class="field">
+                <label for="email">Preferred email <span class="req" aria-hidden="true">*</span></label>
+                <input id="email" name="email" type="email" required maxlength="120" autocomplete="email" inputmode="email" enterkeyhint="next" placeholder="name@us.af.mil">
+                <p class="field-error" id="email-error" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="first">First name <span class="req" aria-hidden="true">*</span></label>
+                <input id="first" name="firstName" type="text" required maxlength="60" autocomplete="given-name" enterkeyhint="next">
+                <p class="field-error" id="first-error" aria-live="polite"></p>
+              </div>
+              <div class="field">
+                <label for="last">Last name <span class="req" aria-hidden="true">*</span></label>
+                <input id="last" name="lastName" type="text" required maxlength="60" autocomplete="family-name" enterkeyhint="next">
+                <p class="field-error" id="last-error" aria-live="polite"></p>
+              </div>
+            </div>
 
             <fieldset class="fs" id="experience" aria-describedby="experience-hint">
               <legend>Research experience <span class="req" aria-hidden="true">*</span></legend>
@@ -238,20 +252,18 @@
               <p class="field-error" id="experience-error" aria-live="polite"></p>
             </fieldset>
 
-            <fieldset class="fs">
-              <legend>Your interest</legend>
-              <div class="field">
-                <label for="interest">Why are you interested in research? <span class="req" aria-hidden="true">*</span></label>
-                <textarea id="interest" name="interest" rows="4" required maxlength="2000" enterkeyhint="enter"></textarea>
-                <p class="field-error" id="interest-error" aria-live="polite"></p>
-              </div>
-              <label class="check">
-                <input type="checkbox" name="commitment" id="commit" class="sr-only" required>
-                <span class="check__box" aria-hidden="true"></span>
-                <span>With my submission and final cohort confirmation I will be committed to a cohort and will diligently contribute my efforts with my partnered team to completion of the research paper. <span class="req" aria-hidden="true">*</span></span>
-              </label>
-              <p class="field-error" id="commit-error" aria-live="polite"></p>
-            </fieldset>
+            <div class="field">
+              <label for="interest">Why are you interested in research? <span class="req" aria-hidden="true">*</span></label>
+              <textarea id="interest" name="interest" rows="3" required maxlength="2000" enterkeyhint="enter"></textarea>
+              <p class="field-error" id="interest-error" aria-live="polite"></p>
+            </div>
+
+            <label class="check">
+              <input type="checkbox" name="commitment" id="commit" class="sr-only" required>
+              <span class="check__box" aria-hidden="true"></span>
+              <span>With my submission and final cohort confirmation I will be committed to a cohort and will diligently contribute my efforts with my partnered team to completion of the research paper. <span class="req" aria-hidden="true">*</span></span>
+            </label>
+            <p class="field-error" id="commit-error" aria-live="polite"></p>
 
             <div class="hp" aria-hidden="true">
               <label for="botcheck">Leave this field empty</label>
@@ -263,6 +275,10 @@
               <span class="btn-spinner" aria-hidden="true"></span>
             </button>
             <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+            <p class="join__privacy">
+              Your details are used only to run the Think Tank. They are seen by DAF CGOC program
+              administrators, and by Air University once your cohort is confirmed.
+            </p>
           </form>
         </div>
       </div>
@@ -270,6 +286,7 @@
   </main>
 
   <footer class="site-foot">
+    <p class="site-foot__mark" aria-hidden="true">Think Tank</p>
     <div class="container site-foot__inner">
       <a href="https://dafcgoc.org" class="site-foot__brand" aria-label="DAF CGOC home">
         <img src="assets/logos/dafcgoc-logo.png" alt="DAF CGOC" width="100" height="72" loading="lazy">

@@ -28,41 +28,82 @@
     CONTACT_EMAIL: "thinktank@dafcgoc.org"
   };
 
-  /* ---------- Scroll-linked: statement words and process steps ---------- */
+  /* ---------- Scroll-linked: statement, topics row, process ----------
+     Each of these has a complete static layout in the CSS. This only adds
+     the motion, on wide screens, when the visitor has not asked for less. */
   (function scrollLinked() {
     var words = document.querySelectorAll(".say span");
-    var list = document.querySelector(".steps");
-    var steps = list ? list.querySelectorAll(".step") : [];
     if (reduce) {
       words.forEach(function (w) { w.classList.add("is-on"); });
       return;
     }
-    if (list) list.classList.add("is-live");
+    var wide = window.matchMedia("(min-width: 900px)");
+    var mission = document.querySelector(".mission");
     var say = document.querySelector(".say");
-    var queued = false;
+    var row = document.querySelector(".bigrow");
+    var rowText = row && row.querySelector(".bigrow__text");
+    var proc = document.querySelector(".process");
+    var track = proc && proc.querySelector(".process__track");
+    var panels = proc ? proc.querySelectorAll(".process__steps .panel") : [];
+    var bar = proc && proc.querySelector(".process__bar");
+    var travel = 0, rowOver = 0, queued = false;
+
+    function clamp01(n) { return Math.max(0, Math.min(1, n)); }
+
+    function measure() {
+      var vh = window.innerHeight;
+      if (proc) {
+        proc.classList.toggle("is-pinned", wide.matches);
+        if (wide.matches) {
+          travel = Math.max(0, track.scrollWidth - window.innerWidth + 40);
+          // the extra 60vh is the stretch where the join sheet rises over the held frame
+          proc.style.height = Math.round(vh + travel + vh * 0.6) + "px";
+        } else {
+          travel = 0;
+          proc.style.height = "";
+          track.style.removeProperty("--tx");
+        }
+      }
+      rowOver = row && wide.matches ? Math.max(0, rowText.scrollWidth - row.clientWidth + 80) : 0;
+      paint();
+    }
+
     function paint() {
       queued = false;
       var vh = window.innerHeight;
       if (say) {
-        var r = say.getBoundingClientRect();
-        var p = (vh * 0.9 - r.top) / (r.height + vh * 0.3);
-        var on = Math.round(Math.max(0, Math.min(1, p)) * words.length);
+        var mr = mission.getBoundingClientRect();
+        var p;
+        if (mr.height > vh * 1.5) {
+          p = -mr.top / ((mr.height - vh) * 0.8);
+        } else {
+          var sr = say.getBoundingClientRect();
+          p = (vh * 0.9 - sr.top) / (sr.height + vh * 0.3);
+        }
+        var on = Math.round(clamp01(p) * words.length);
         words.forEach(function (w, i) { w.classList.toggle("is-on", i < on); });
       }
-      if (list) {
-        var line = vh * 0.62;
-        var lr = list.getBoundingClientRect();
-        list.style.setProperty("--p", Math.max(0, Math.min(1, (line - lr.top - 22) / (lr.height - 44))).toFixed(3));
-        steps.forEach(function (s) {
-          s.classList.toggle("is-active", s.getBoundingClientRect().top + 22 < line);
+      if (rowText) {
+        var rr = row.getBoundingClientRect();
+        rowText.style.setProperty("--x", (-rowOver * clamp01((vh - rr.top) / (vh + rr.height))).toFixed(1) + "px");
+      }
+      if (proc && travel) {
+        var pp = clamp01(-proc.getBoundingClientRect().top / travel);
+        track.style.setProperty("--tx", (-travel * pp).toFixed(1) + "px");
+        bar.style.setProperty("--p", pp.toFixed(3));
+        var mark = window.innerWidth * 0.6;
+        panels.forEach(function (el) {
+          el.classList.toggle("is-active", el.getBoundingClientRect().left < mark);
         });
       }
     }
+
     window.addEventListener("scroll", function () {
       if (!queued) { queued = true; requestAnimationFrame(paint); }
     }, { passive: true });
-    window.addEventListener("resize", paint);
-    paint();
+    window.addEventListener("resize", measure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    measure();
   })();
 
   /* ---------- Hero: grid lit by the pointer ---------- */

@@ -42,9 +42,27 @@ visitor ──► index.html
 | `index.html` | The whole page, with the Firebase init at the bottom |
 | `css/thinktank.css` | All styling; design tokens at the top |
 | `css/fonts.css`, `fonts/geist/` | Self-hosted Geist and Geist Mono (SIL OFL, license in the folder) |
-| `js/thinktank.js` | Hero pointer effect, form validation, submission |
+| `js/thinktank.js` | Scroll-linked motion, hero pointer effect, form validation, submission |
 | `js/analytics.js` | Shared engagement tracking, identical to the copy in the penpal and main site repos |
 | `apps-script/` | Poller that copies sign-ups to a Sheet and emails a notification |
+
+## Topics section
+
+The twelve topic areas and the one example question beside each were copied by
+hand from Air University's Research Topics page on 13 October 2026, along with
+the "more than 300 questions" count (342 that day). Air University's list
+changes; when it does, edit the `<ol class="areas">` list and the sentence
+above it in `index.html`. The page links to Air University's list as the
+current source.
+
+## Layout and motion
+
+Each section is a different layout: the hero climb, a held mission screen, a
+light index of topic areas, a held frame where the five steps travel sideways,
+and the blue sign-up sheet. The held screens and sideways motion run only on
+screens 900px and wider, with JavaScript, when the visitor has not asked for
+reduced motion. Everywhere else the same content sits in normal flow and the
+steps are a swipeable row.
 
 ## Changing the form
 
