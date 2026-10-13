@@ -35,7 +35,7 @@
 /* ---------- 1. Base ---------- */
 *,*::before,*::after{box-sizing:border-box;}
 [hidden]{display:none !important;}
-html{scroll-behavior:smooth;scroll-padding-top:96px;-webkit-text-size-adjust:100%;
+html{scroll-padding-top:96px;-webkit-text-size-adjust:100%;
   scrollbar-color:#24325A var(--ink);}
 body{margin:0;background:var(--ink);color:var(--text-2);font-family:var(--font);
   font-size:var(--fs-body);line-height:1.6;-webkit-font-smoothing:antialiased;
@@ -46,7 +46,7 @@ h1,h2,h3{margin:0;color:var(--text);font-weight:600;letter-spacing:-.03em;line-h
 h2{font-size:var(--fs-h2);}
 p{margin:0;text-wrap:pretty;}
 a{color:var(--sky);text-decoration-thickness:1px;text-underline-offset:.2em;}
-main:focus{outline:none;}
+main:focus,section:focus{outline:none;}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px;}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
   clip:rect(0,0,0,0);white-space:nowrap;border:0;}

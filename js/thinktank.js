@@ -68,6 +68,49 @@
     measure();
   })();
 
+  /* ---------- In-page links: an eased scroll to the section ----------
+     The browser's own smooth scroll has a fixed short duration, which reads
+     as a jump over the long held sections. This one scales with distance
+     and yields to the visitor the moment they scroll themselves. */
+  (function anchorScroll() {
+    var raf = 0;
+    function stop() { if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+    ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (ev) {
+      window.addEventListener(ev, stop, { passive: true });
+    });
+    function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="#"]');
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var id = a.getAttribute("href").slice(1);
+      var el = id && document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      stop();
+      // held sections start exactly at their top; the rest clear the floating bar
+      var held = el.offsetHeight > window.innerHeight * 1.4;
+      var from = window.scrollY;
+      var to = Math.max(0, Math.min(
+        el.getBoundingClientRect().top + from - (held ? 0 : 84),
+        docEl.scrollHeight - window.innerHeight));
+      history.pushState(null, "", "#" + id);
+      function land() {
+        raf = 0;
+        if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
+        el.focus({ preventScroll: true });
+      }
+      if (reduce) { window.scrollTo(0, to); land(); return; }
+      var dist = Math.abs(to - from);
+      var dur = Math.max(500, Math.min(1600, dist * 0.45));
+      var t0 = performance.now();
+      raf = requestAnimationFrame(function step(now) {
+        var t = Math.min(1, (now - t0) / dur);
+        window.scrollTo(0, from + (to - from) * ease(t));
+        if (t < 1) raf = requestAnimationFrame(step); else land();
+      });
+    });
+  })();
+
   /* ---------- Scroll-linked: statement, topics row, process ----------
      Each of these has a complete static layout in the CSS. This only adds
      the motion, on wide screens, when the visitor has not asked for less.
