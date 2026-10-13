@@ -28,9 +28,42 @@
     CONTACT_EMAIL: "thinktank@dafcgoc.org"
   };
 
+  /* ---------- Header: section in view, page progress ---------- */
+  (function header() {
+    var head = document.querySelector(".site-head");
+    var links = head ? head.querySelectorAll(".site-nav a") : [];
+    if (!head) return;
+    var targets = Array.prototype.map.call(links, function (a) {
+      return document.querySelector(a.getAttribute("href"));
+    });
+    var queued = false;
+    function paint() {
+      queued = false;
+      var max = docEl.scrollHeight - window.innerHeight;
+      head.style.setProperty("--page", (max > 0 ? window.scrollY / max : 0).toFixed(4));
+      var mid = window.innerHeight * 0.5, current = -1;
+      targets.forEach(function (t, i) {
+        if (!t) return;
+        var r = t.getBoundingClientRect();
+        if (r.top <= mid && r.bottom > mid) current = i;
+      });
+      links.forEach(function (a, i) {
+        if (i === current) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      });
+    }
+    window.addEventListener("scroll", function () {
+      if (!queued) { queued = true; requestAnimationFrame(paint); }
+    }, { passive: true });
+    window.addEventListener("resize", paint);
+    paint();
+  })();
+
   /* ---------- Scroll-linked: statement, topics row, process ----------
      Each of these has a complete static layout in the CSS. This only adds
-     the motion, on wide screens, when the visitor has not asked for less. */
+     the motion, on wide screens, when the visitor has not asked for less.
+     Scrolling itself stays native. The moving values ease toward where the
+     scroll position puts them, so a mouse wheel's steps come out as a glide. */
   (function scrollLinked() {
     var words = document.querySelectorAll(".say span");
     if (reduce) {
@@ -46,7 +79,10 @@
     var track = proc && proc.querySelector(".process__track");
     var panels = proc ? proc.querySelectorAll(".process__steps .panel") : [];
     var bar = proc && proc.querySelector(".process__bar");
-    var travel = 0, rowOver = 0, queued = false;
+    var travel = 0, rowOver = 0, panelLeft = [];
+    // targets come from the scroll position; current values chase them
+    var target = { tx: 0, x: 0 }, cur = { tx: 0, x: 0 };
+    var running = false, last = 0;
 
     function clamp01(n) { return Math.max(0, Math.min(1, n)); }
 
@@ -54,27 +90,32 @@
       var vh = window.innerHeight;
       if (proc) {
         proc.classList.toggle("is-pinned", wide.matches);
+        track.style.removeProperty("--tx");
         if (wide.matches) {
           travel = Math.max(0, track.scrollWidth - window.innerWidth + 40);
           // the extra 60vh is the stretch where the join sheet rises over the held frame
           proc.style.height = Math.round(vh + travel + vh * 0.6) + "px";
+          var base = track.getBoundingClientRect().left;
+          panelLeft = Array.prototype.map.call(panels, function (el) {
+            return el.getBoundingClientRect().left - base;
+          });
         } else {
           travel = 0;
           proc.style.height = "";
-          track.style.removeProperty("--tx");
         }
       }
       rowOver = row && wide.matches ? Math.max(0, rowText.scrollWidth - row.clientWidth + 80) : 0;
-      paint();
+      read();
+      cur.tx = target.tx; cur.x = target.x;
+      write();
     }
 
-    function paint() {
-      queued = false;
+    function read() {
       var vh = window.innerHeight;
       if (say) {
         var mr = mission.getBoundingClientRect();
         var p;
-        if (mr.height > vh * 1.5) {
+        if (mr.height > vh * 1.4) {
           p = -mr.top / ((mr.height - vh) * 0.8);
         } else {
           var sr = say.getBoundingClientRect();
@@ -85,21 +126,41 @@
       }
       if (rowText) {
         var rr = row.getBoundingClientRect();
-        rowText.style.setProperty("--x", (-rowOver * clamp01((vh - rr.top) / (vh + rr.height))).toFixed(1) + "px");
+        target.x = -rowOver * clamp01((vh - rr.top) / (vh + rr.height));
       }
       if (proc && travel) {
-        var pp = clamp01(-proc.getBoundingClientRect().top / travel);
-        track.style.setProperty("--tx", (-travel * pp).toFixed(1) + "px");
-        bar.style.setProperty("--p", pp.toFixed(3));
+        target.tx = -travel * clamp01(-proc.getBoundingClientRect().top / travel);
+      }
+    }
+
+    function write() {
+      if (rowText) rowText.style.setProperty("--x", cur.x.toFixed(1) + "px");
+      if (proc && travel) {
+        track.style.setProperty("--tx", cur.tx.toFixed(1) + "px");
+        bar.style.setProperty("--p", (-cur.tx / travel).toFixed(3));
         var mark = window.innerWidth * 0.6;
-        panels.forEach(function (el) {
-          el.classList.toggle("is-active", el.getBoundingClientRect().left < mark);
+        panels.forEach(function (el, i) {
+          el.classList.toggle("is-active", panelLeft[i] + cur.tx < mark);
         });
       }
     }
 
+    function tick(now) {
+      // frame-rate independent easing: the same glide at 60 and 144 Hz
+      var k = 1 - Math.exp(-(now - last) / 110);
+      last = now;
+      read();
+      cur.tx += (target.tx - cur.tx) * k;
+      cur.x += (target.x - cur.x) * k;
+      var settled = Math.abs(target.tx - cur.tx) < 0.3 && Math.abs(target.x - cur.x) < 0.3;
+      if (settled) { cur.tx = target.tx; cur.x = target.x; }
+      write();
+      if (settled) { running = false; return; }
+      requestAnimationFrame(tick);
+    }
+
     window.addEventListener("scroll", function () {
-      if (!queued) { queued = true; requestAnimationFrame(paint); }
+      if (!running) { running = true; last = performance.now(); requestAnimationFrame(tick); }
     }, { passive: true });
     window.addEventListener("resize", measure);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);

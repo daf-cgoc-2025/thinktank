@@ -48,12 +48,10 @@ visitor ──► index.html
 
 ## Topics section
 
-The twelve topic areas and the one example question beside each were copied by
-hand from Air University's Research Topics page on 13 October 2026, along with
-the "more than 300 questions" count (342 that day). Air University's list
-changes; when it does, edit the `<ol class="areas">` list and the sentence
-above it in `index.html`. The page links to Air University's list as the
-current source.
+The twelve topic areas were copied by hand from Air University's Research
+Topics page on 13 October 2026. Air University's list changes; when it does,
+edit the `<ol class="areas">` list in `index.html`. The page links to Air
+University's list as the current source.
 
 ## Layout and motion
 

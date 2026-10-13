@@ -38,13 +38,17 @@
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-head">
-    <div class="container site-head__inner">
-      <a class="brand" href="https://dafcgoc.org" aria-label="Think Tank, DAF CGOC main site">
-        <img src="assets/logos/dafcgoc-logo.png" alt="" width="50" height="36">
-        <span class="brand__name">Think Tank</span>
-      </a>
-      <a class="btn btn--primary btn--sm" href="#join">Join a cohort</a>
-    </div>
+    <a class="brand" href="https://dafcgoc.org" aria-label="Think Tank, DAF CGOC main site">
+      <img src="assets/logos/dafcgoc-logo.png" alt="" width="44" height="32">
+      <span class="brand__name">Think Tank</span>
+    </a>
+    <nav class="site-nav" aria-label="Sections">
+      <a href="#mission">Mission</a>
+      <a href="#topics">Topics</a>
+      <a href="#process">Process</a>
+    </nav>
+    <a class="btn btn--primary btn--sm" href="#join">Join a cohort</a>
+    <span class="site-head__progress" aria-hidden="true"></span>
   </header>
 
   <main id="main" tabindex="-1">
@@ -78,7 +82,7 @@
       </svg>
 
       <div class="container hero__inner">
-        <h1 id="hero-title"><span>RESEARCH BY CGOs.</span> <span class="hero__gold">BRIEFED TO SENIOR LEADERS.</span></h1>
+        <h1 id="hero-title"><span>Research by CGOs.</span> <span class="hero__second">Briefed to senior leaders.</span></h1>
         <div class="hero__foot">
           <a class="btn btn--primary" href="#join">Join a research cohort</a>
           <p class="hero__partner">In partnership with Air University</p>
@@ -87,7 +91,7 @@
     </section>
 
     <!-- ============ Mission: one held screen ============ -->
-    <section class="mission" aria-labelledby="mission-title">
+    <section id="mission" class="mission" aria-labelledby="mission-title">
       <div class="mission__stage">
         <div class="container mission__inner">
           <p class="mission__note mission__note--a">
@@ -95,7 +99,7 @@
             (DAF CGOC) premier research opportunity. It fosters a collaborative environment to
             drive innovative solutions and proposals among the Company Grade Officer cohort.
           </p>
-          <h2 id="mission-title" class="say"><span>FOR</span> <span>CGOs.</span><br><span>SUPPORTED</span> <span>BY</span> <span>CGOs.</span></h2>
+          <h2 id="mission-title" class="say"><span>For</span> <span>CGOs.</span><br><span>Supported</span> <span>by</span> <span>CGOs.</span></h2>
           <p class="mission__note mission__note--b">
             Our mission is to increase research accessibility and opportunity for our young
             officers.
@@ -114,27 +118,22 @@
               Through our partnership with Air University, cohorts choose from Air University's
               complete list of research topics: the priorities of our Air Force senior leaders.
             </p>
-            <p>
-              The list is made up of questions given to Air University by organizations in the
-              Air Force and across the Department of Defense. It held more than 300 questions
-              in October 2026, sorted into twelve areas.
-            </p>
+            <p>Here are some of the possible topic areas, among others.</p>
           </div>
         </div>
-        <p class="areas__key" aria-hidden="true"><span>Topic area</span><span>One question on the list today</span></p>
         <ol class="areas">
-          <li><span class="areas__n" aria-hidden="true">01</span><span class="areas__name">China</span><span class="areas__eg">Historic PRC–Taiwan Provocation Cycle</span></li>
-          <li><span class="areas__n" aria-hidden="true">02</span><span class="areas__name">Russia/Ukraine</span><span class="areas__eg">Russian Way of War: Military Logistics and Sustainment</span></li>
-          <li><span class="areas__n" aria-hidden="true">03</span><span class="areas__name">Competition</span><span class="areas__eg">Intelligence in Strategic Competition</span></li>
-          <li><span class="areas__n" aria-hidden="true">04</span><span class="areas__name">Emerging Technology</span><span class="areas__eg">Future Space-Based ISR Capabilities</span></li>
-          <li><span class="areas__n" aria-hidden="true">05</span><span class="areas__name">AI/ML &amp; Automation</span><span class="areas__eg">Human-Machine Teaming and the Human-Technology Interface</span></li>
-          <li><span class="areas__n" aria-hidden="true">06</span><span class="areas__name">Airpower Concepts</span><span class="areas__eg">Light and Lean: ACE Maneuver Unit Footprint Reduction</span></li>
-          <li><span class="areas__n" aria-hidden="true">07</span><span class="areas__name">Nuclear</span><span class="areas__eg">Public Opinion and Nuclear Deterrence</span></li>
-          <li><span class="areas__n" aria-hidden="true">08</span><span class="areas__name">Joint Warfighting</span><span class="areas__eg">Joint Force Design and Concepts</span></li>
-          <li><span class="areas__n" aria-hidden="true">09</span><span class="areas__name">Whole of Society</span><span class="areas__eg">Metrics of Industrial Base Capacity</span></li>
-          <li><span class="areas__n" aria-hidden="true">10</span><span class="areas__name">Allies &amp; Partners</span><span class="areas__eg">Dependence of United States Air Force on its Allies and Partners</span></li>
-          <li><span class="areas__n" aria-hidden="true">11</span><span class="areas__name">Talent Management</span><span class="areas__eg">Recruiting, Readiness, and the All-Volunteer Force</span></li>
-          <li><span class="areas__n" aria-hidden="true">12</span><span class="areas__name">Leadership &amp; Decisions</span><span class="areas__eg">Leadership in Combat Wings</span></li>
+          <li><span class="areas__n" aria-hidden="true">01</span><span class="areas__name">China</span></li>
+          <li><span class="areas__n" aria-hidden="true">02</span><span class="areas__name">Russia/Ukraine</span></li>
+          <li><span class="areas__n" aria-hidden="true">03</span><span class="areas__name">Competition</span></li>
+          <li><span class="areas__n" aria-hidden="true">04</span><span class="areas__name">Emerging Technology</span></li>
+          <li><span class="areas__n" aria-hidden="true">05</span><span class="areas__name">AI/ML &amp; Automation</span></li>
+          <li><span class="areas__n" aria-hidden="true">06</span><span class="areas__name">Airpower Concepts</span></li>
+          <li><span class="areas__n" aria-hidden="true">07</span><span class="areas__name">Nuclear</span></li>
+          <li><span class="areas__n" aria-hidden="true">08</span><span class="areas__name">Joint Warfighting</span></li>
+          <li><span class="areas__n" aria-hidden="true">09</span><span class="areas__name">Whole of Society</span></li>
+          <li><span class="areas__n" aria-hidden="true">10</span><span class="areas__name">Allies &amp; Partners</span></li>
+          <li><span class="areas__n" aria-hidden="true">11</span><span class="areas__name">Talent Management</span></li>
+          <li><span class="areas__n" aria-hidden="true">12</span><span class="areas__name">Leadership &amp; Decisions</span></li>
         </ol>
       </div>
       <a class="bigrow" id="au-topics" href="https://www.airuniversity.af.edu/Office-of-Sponsored-Programs/Research/" target="_blank" rel="noopener">
@@ -144,8 +143,8 @@
       </a>
       <div class="container">
         <p class="topics__note">
-          The list changes as organizations submit new questions. For every question, the papers
-          already written on each, and the current version, use Air University's page.
+          For more, including the questions in each area and the current list, go to Air
+          University's page.
         </p>
       </div>
     </section>
