@@ -36,16 +36,24 @@
     var targets = Array.prototype.map.call(links, function (a) {
       return document.querySelector(a.getAttribute("href"));
     });
-    var queued = false;
+    var queued = false, max = 0, spans = [];
+    // positions are measured on load and resize, never while scrolling
+    function measure() {
+      max = docEl.scrollHeight - window.innerHeight;
+      spans = targets.map(function (t) {
+        if (!t) return null;
+        var r = t.getBoundingClientRect();
+        return [r.top + window.scrollY, r.bottom + window.scrollY];
+      });
+      paint();
+    }
     function paint() {
       queued = false;
-      var max = docEl.scrollHeight - window.innerHeight;
-      head.style.setProperty("--page", (max > 0 ? window.scrollY / max : 0).toFixed(4));
-      var mid = window.innerHeight * 0.5, current = -1;
-      targets.forEach(function (t, i) {
-        if (!t) return;
-        var r = t.getBoundingClientRect();
-        if (r.top <= mid && r.bottom > mid) current = i;
+      var y = window.scrollY;
+      head.style.setProperty("--page", (max > 0 ? y / max : 0).toFixed(4));
+      var mid = y + window.innerHeight * 0.5, current = -1;
+      spans.forEach(function (sp, i) {
+        if (sp && sp[0] <= mid && sp[1] > mid) current = i;
       });
       links.forEach(function (a, i) {
         if (i === current) a.setAttribute("aria-current", "true");
@@ -55,8 +63,9 @@
     window.addEventListener("scroll", function () {
       if (!queued) { queued = true; requestAnimationFrame(paint); }
     }, { passive: true });
-    window.addEventListener("resize", paint);
-    paint();
+    window.addEventListener("resize", measure);
+    window.addEventListener("load", measure);
+    measure();
   })();
 
   /* ---------- Scroll-linked: statement, topics row, process ----------
@@ -80,9 +89,11 @@
     var panels = proc ? proc.querySelectorAll(".process__steps .panel") : [];
     var bar = proc && proc.querySelector(".process__bar");
     var travel = 0, rowOver = 0, panelLeft = [];
+    // document positions, measured on load and resize, never while scrolling
+    var at = { missionTop: 0, missionH: 0, sayTop: 0, sayH: 0, rowTop: 0, rowH: 0, procTop: 0 };
     // targets come from the scroll position; current values chase them
     var target = { tx: 0, x: 0 }, cur = { tx: 0, x: 0 };
-    var running = false, last = 0;
+    var running = false, last = 0, lit = -1;
 
     function clamp01(n) { return Math.max(0, Math.min(1, n)); }
 
@@ -105,32 +116,32 @@
         }
       }
       rowOver = row && wide.matches ? Math.max(0, rowText.scrollWidth - row.clientWidth + 80) : 0;
+      var y = window.scrollY, r;
+      if (say) {
+        r = mission.getBoundingClientRect(); at.missionTop = r.top + y; at.missionH = r.height;
+        r = say.getBoundingClientRect(); at.sayTop = r.top + y; at.sayH = r.height;
+      }
+      if (row) { r = row.getBoundingClientRect(); at.rowTop = r.top + y; at.rowH = r.height; }
+      if (proc) at.procTop = proc.getBoundingClientRect().top + y;
       read();
       cur.tx = target.tx; cur.x = target.x;
       write();
     }
 
     function read() {
-      var vh = window.innerHeight;
+      var vh = window.innerHeight, y = window.scrollY;
       if (say) {
-        var mr = mission.getBoundingClientRect();
-        var p;
-        if (mr.height > vh * 1.4) {
-          p = -mr.top / ((mr.height - vh) * 0.8);
-        } else {
-          var sr = say.getBoundingClientRect();
-          p = (vh * 0.9 - sr.top) / (sr.height + vh * 0.3);
-        }
+        var p = at.missionH > vh * 1.4
+          ? (y - at.missionTop) / ((at.missionH - vh) * 0.8)
+          : (vh * 0.9 - (at.sayTop - y)) / (at.sayH + vh * 0.3);
         var on = Math.round(clamp01(p) * words.length);
-        words.forEach(function (w, i) { w.classList.toggle("is-on", i < on); });
+        if (on !== lit) {
+          lit = on;
+          words.forEach(function (w, i) { w.classList.toggle("is-on", i < on); });
+        }
       }
-      if (rowText) {
-        var rr = row.getBoundingClientRect();
-        target.x = -rowOver * clamp01((vh - rr.top) / (vh + rr.height));
-      }
-      if (proc && travel) {
-        target.tx = -travel * clamp01(-proc.getBoundingClientRect().top / travel);
-      }
+      if (rowText) target.x = -rowOver * clamp01((vh - (at.rowTop - y)) / (vh + at.rowH));
+      if (proc && travel) target.tx = -travel * clamp01((y - at.procTop) / travel);
     }
 
     function write() {
@@ -147,7 +158,7 @@
 
     function tick(now) {
       // frame-rate independent easing: the same glide at 60 and 144 Hz
-      var k = 1 - Math.exp(-(now - last) / 110);
+      var k = 1 - Math.exp(-Math.min(now - last, 100) / 110);
       last = now;
       read();
       cur.tx += (target.tx - cur.tx) * k;
@@ -163,6 +174,7 @@
       if (!running) { running = true; last = performance.now(); requestAnimationFrame(tick); }
     }, { passive: true });
     window.addEventListener("resize", measure);
+    window.addEventListener("load", measure);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
     measure();
   })();
