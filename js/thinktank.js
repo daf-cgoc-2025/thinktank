@@ -118,6 +118,7 @@
      scroll position puts them, so a mouse wheel's steps come out as a glide. */
   (function scrollLinked() {
     var words = document.querySelectorAll(".say span");
+    var pillars = document.querySelectorAll(".pillars li");
     if (reduce) {
       words.forEach(function (w) { w.classList.add("is-on"); });
       return;
@@ -136,7 +137,7 @@
     var at = { missionTop: 0, missionH: 0, sayTop: 0, sayH: 0, rowTop: 0, rowH: 0, procTop: 0 };
     // targets come from the scroll position; current values chase them
     var target = { tx: 0, x: 0 }, cur = { tx: 0, x: 0 };
-    var running = false, last = 0, lit = -1;
+    var running = false, last = 0, lit = -1, litPillars = -1;
 
     function clamp01(n) { return Math.max(0, Math.min(1, n)); }
 
@@ -174,13 +175,19 @@
     function read() {
       var vh = window.innerHeight, y = window.scrollY;
       if (say) {
-        var p = at.missionH > vh * 1.4
-          ? (y - at.missionTop) / ((at.missionH - vh) * 0.8)
-          : (vh * 0.9 - (at.sayTop - y)) / (at.sayH + vh * 0.3);
+        // held: the statement lights over the first third, then a pillar at 40, 58 and 76 percent
+        var held = at.missionH > vh * 1.4;
+        var hp = held ? (y - at.missionTop) / (at.missionH - vh) : 0;
+        var p = held ? hp / 0.33 : (vh * 0.9 - (at.sayTop - y)) / (at.sayH + vh * 0.3);
         var on = Math.round(clamp01(p) * words.length);
         if (on !== lit) {
           lit = on;
           words.forEach(function (w, i) { w.classList.toggle("is-on", i < on); });
+        }
+        var up = held ? (hp > 0.76 ? 3 : hp > 0.58 ? 2 : hp > 0.4 ? 1 : 0) : pillars.length;
+        if (up !== litPillars) {
+          litPillars = up;
+          pillars.forEach(function (el, i) { el.classList.toggle("is-on", i < up); });
         }
       }
       if (rowText) target.x = -rowOver * clamp01((vh - (at.rowTop - y)) / (vh + at.rowH));

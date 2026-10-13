@@ -169,25 +169,29 @@ main:focus,section:focus{outline:none;}
   .hero__foot .btn{width:100%;}
 }
 
-/* ---------- 5. Mission: a statement and two notes ---------- */
+/* ---------- 5. Mission: the statement and its three pillars ---------- */
 .mission{background:var(--ink);}
-.mission__inner{display:grid;gap:2.5rem;padding-block:var(--section-y);}
+.mission__inner{display:grid;gap:clamp(2.5rem,6vw,4rem);padding-block:var(--section-y);}
 .say{font-size:clamp(2.2rem,1.2rem + 4vw,4.4rem);letter-spacing:-.04em;line-height:1.02;font-weight:600;}
 /* js lights the words in order as the section scrolls through */
 html.js .say span{color:rgba(237,241,250,.2);transition:color .5s var(--ease);}
 html.js .say span.is-on{color:var(--text);}
-.mission__note{max-width:38ch;font-size:1rem;line-height:1.55;color:var(--text-2);}
-.mission__note--b{color:var(--text);}
-/* in the plain flow the statement leads */
-.say{order:-1;}
-/* wide screens: the screen holds while the words light, the notes sit in opposite corners */
+.mission__note{margin-top:1.5rem;max-width:40ch;font-size:1rem;line-height:1.55;color:var(--text-2);}
+.pillars{list-style:none;margin:0;padding:0;}
+.pillars li{display:grid;grid-template-columns:3rem 1fr;column-gap:.5rem;align-items:baseline;
+  padding:1.4rem 0;border-top:1px solid var(--line-2);}
+.pillars li:last-child{border-bottom:1px solid var(--line-2);}
+.pillars__n{font-family:var(--mono);font-size:.8125rem;color:var(--gold);font-variant-numeric:tabular-nums;}
+.pillars h3{font-size:clamp(1.5rem,1.2rem + 1.3vw,2.2rem);letter-spacing:-.03em;line-height:1.05;}
+.pillars p{grid-column:2;margin-top:.5rem;max-width:36ch;color:var(--text-2);}
+/* wide screens: the screen holds while the statement lights, then each pillar arrives */
 @media (min-width:900px) and (prefers-reduced-motion:no-preference){
-  html.js .mission{height:170vh;}
+  html.js .mission{height:230vh;}
   html.js .mission__stage{position:sticky;top:0;height:100vh;height:100svh;}
-  html.js .mission__inner{height:100%;grid-template-rows:auto 1fr auto;padding-block:120px 64px;}
-  html.js .say{align-self:center;order:0;}
-  html.js .mission__note--a{justify-self:end;}
-  html.js .mission__note--b{justify-self:start;}
+  html.js .mission__inner{height:100%;grid-template-columns:1.1fr .9fr;gap:5rem;align-items:center;padding-block:96px 48px;}
+  html.js .pillars li{opacity:.22;transform:translate3d(0,10px,0);
+    transition:opacity .6s var(--ease),transform .6s var(--ease);}
+  html.js .pillars li.is-on{opacity:1;transform:none;}
 }
 
 /* ---------- 6. Topics: a light sheet, an index of the twelve areas ---------- */
