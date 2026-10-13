@@ -28,27 +28,41 @@
     CONTACT_EMAIL: "thinktank@dafcgoc.org"
   };
 
-  /* ---------- Reveal on scroll ---------- */
-  (function reveals() {
-    var els = document.querySelectorAll(".reveal");
-    if (!els.length) return;
-    if (reduce || !("IntersectionObserver" in window)) {
-      els.forEach(function (el) { el.classList.add("is-visible"); });
+  /* ---------- Scroll-linked: statement words and process steps ---------- */
+  (function scrollLinked() {
+    var words = document.querySelectorAll(".say span");
+    var list = document.querySelector(".steps");
+    var steps = list ? list.querySelectorAll(".step") : [];
+    if (reduce) {
+      words.forEach(function (w) { w.classList.add("is-on"); });
       return;
     }
-    document.querySelectorAll(".reveal[data-stagger]").forEach(function (group) {
-      Array.prototype.forEach.call(group.children, function (c, i) {
-        c.style.setProperty("--i", i);
-      });
-    });
-    var io = new IntersectionObserver(function (entries, obs) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-visible");
-        obs.unobserve(entry.target);
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
-    els.forEach(function (el) { io.observe(el); });
+    if (list) list.classList.add("is-live");
+    var say = document.querySelector(".say");
+    var queued = false;
+    function paint() {
+      queued = false;
+      var vh = window.innerHeight;
+      if (say) {
+        var r = say.getBoundingClientRect();
+        var p = (vh * 0.9 - r.top) / (r.height + vh * 0.3);
+        var on = Math.round(Math.max(0, Math.min(1, p)) * words.length);
+        words.forEach(function (w, i) { w.classList.toggle("is-on", i < on); });
+      }
+      if (list) {
+        var line = vh * 0.62;
+        var lr = list.getBoundingClientRect();
+        list.style.setProperty("--p", Math.max(0, Math.min(1, (line - lr.top - 22) / (lr.height - 44))).toFixed(3));
+        steps.forEach(function (s) {
+          s.classList.toggle("is-active", s.getBoundingClientRect().top + 22 < line);
+        });
+      }
+    }
+    window.addEventListener("scroll", function () {
+      if (!queued) { queued = true; requestAnimationFrame(paint); }
+    }, { passive: true });
+    window.addEventListener("resize", paint);
+    paint();
   })();
 
   /* ---------- Hero: grid lit by the pointer ---------- */

@@ -195,15 +195,30 @@ main:focus{outline:none;}
 .section{padding-block:var(--section-y);}
 .section h2 + p,.process__head p{margin-top:1.25rem;max-width:56ch;font-size:var(--fs-lead);line-height:1.5;}
 
+/* drafting crosshairs where a section rule meets the content edges */
+.section,.mission{position:relative;}
+.section::after,.mission::after{content:"";position:absolute;top:-7px;left:50%;transform:translateX(-50%);
+  width:min(100% - 2 * var(--gutter),var(--container));height:13px;pointer-events:none;
+  background:
+    linear-gradient(var(--chrome-lo),var(--chrome-lo)) left 6px top 0/1px 13px no-repeat,
+    linear-gradient(var(--chrome-lo),var(--chrome-lo)) left 0 top 6px/13px 1px no-repeat,
+    linear-gradient(var(--chrome-lo),var(--chrome-lo)) right 6px top 0/1px 13px no-repeat,
+    linear-gradient(var(--chrome-lo),var(--chrome-lo)) right 0 top 6px/13px 1px no-repeat;
+  opacity:.55;}
+
 /* mission */
 .mission{padding-block:var(--section-y);
   background:radial-gradient(70% 90% at 100% 100%,rgba(0,48,143,.38),transparent 70%),var(--ink);}
-.mission__inner{display:grid;gap:2.5rem;}
-.mission h2{font-size:clamp(2.2rem,1.2rem + 4.6vw,4.25rem);letter-spacing:-.04em;line-height:1;}
-.mission__body{display:grid;gap:1.25rem;max-width:58ch;font-size:var(--fs-lead);line-height:1.55;align-content:start;}
+.mission__inner{display:grid;gap:clamp(2.5rem,6vw,5rem);}
+.say{font-size:clamp(3.2rem,13.5vw,10.5rem);letter-spacing:-.045em;line-height:.9;font-weight:600;}
+/* js lights the words in order as the section scrolls through */
+html.js .say span{color:rgba(237,241,250,.2);transition:color .5s var(--ease);}
+html.js .say span.is-on{color:var(--text);}
+.mission__body{display:grid;gap:1.25rem;font-size:var(--fs-lead);line-height:1.55;align-content:start;}
+.mission__body p{max-width:46ch;}
 .mission__body p:last-child{color:var(--text);}
 @media (min-width:900px){
-  .mission__inner{grid-template-columns:1.25fr 1fr;gap:4rem;align-items:end;}
+  .mission__body{grid-template-columns:1fr 1fr;gap:4rem;}
 }
 
 /* topics */
@@ -232,14 +247,23 @@ main:focus{outline:none;}
 .process__cta{justify-self:start;}
 .process{display:grid;gap:3rem;}
 .steps{list-style:none;margin:0;padding:0;position:relative;}
-.steps::before{content:"";position:absolute;left:21px;top:22px;bottom:22px;width:1px;
-  background:linear-gradient(180deg,var(--line-2),var(--sky) 55%,var(--gold));}
+.steps::before,.steps::after{content:"";position:absolute;left:21px;top:22px;bottom:22px;width:1px;}
+.steps::before{background:var(--line-2);}
+/* js sets --p to how far the list has scrolled past the reading line */
+.steps::after{background:linear-gradient(180deg,var(--chrome),var(--sky) 55%,var(--gold));
+  transform:scaleY(var(--p,1));transform-origin:top;}
 .step{position:relative;display:grid;grid-template-columns:44px 1fr;column-gap:1.5rem;padding-bottom:2.75rem;}
 .step:last-child{padding-bottom:0;}
 .step__n{grid-row:1 / span 2;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
   background:var(--midnight);border:1px solid var(--line-2);box-shadow:inset 0 1px 0 var(--rim);
-  font-family:var(--mono);font-size:.8125rem;color:var(--text);font-variant-numeric:tabular-nums;}
-.step--end .step__n{background:var(--gold);border-color:#FFF3C4;color:#1A1300;font-weight:600;}
+  font-family:var(--mono);font-size:.8125rem;font-weight:600;color:#060A16;font-variant-numeric:tabular-nums;
+  position:relative;z-index:1;background:var(--chrome);border-color:#fff;
+  transition:background-color .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease);}
+.step--end .step__n{background:var(--gold);border-color:#FFF3C4;color:#1A1300;}
+/* until a step is reached its marker is hollow; the text stays fully readable */
+html.js .steps.is-live .step:not(.is-active) .step__n{background:var(--midnight);color:var(--text);
+  border-color:var(--line-2);transform:scale(.88);}
+html.js .steps.is-live .step--end:not(.is-active) .step__n{border-color:rgba(245,197,66,.6);color:var(--gold);}
 .step h3{padding-top:.55rem;}
 .step p{margin-top:.5rem;max-width:52ch;}
 @media (min-width:900px){
@@ -247,9 +271,6 @@ main:focus{outline:none;}
   .process__head{position:sticky;top:120px;align-self:start;}
   .process__cta{grid-column:2;margin-left:calc(44px + 1.5rem);}
 }
-html.js .reveal[data-stagger] > *{opacity:0;transform:translateY(14px);}
-html.js .reveal[data-stagger].is-visible > *{opacity:1;transform:none;
-  transition:opacity .6s var(--ease) calc(var(--i,0) * 90ms),transform .6s var(--ease) calc(var(--i,0) * 90ms);}
 
 /* ---------- 6. Join ---------- */
 .section--join{position:relative;isolation:isolate;border-top:1px solid var(--line);overflow:hidden;}
