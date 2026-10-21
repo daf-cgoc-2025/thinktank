@@ -24,11 +24,15 @@ function setup() {
 
 var PROJECT_ID = 'dafcgoc';
 var COLLECTION = 'thinktankIntake';
-var NOTIFY_EMAIL = 'nationalcgoc@gmail.com';
+// thinktank@ is a forward; who reads it is set there, not here. The script
+// runs as nationalcgoc, and Gmail can drop a forwarded copy of mail the
+// account itself sent, so nationalcgoc is also addressed directly.
+var NOTIFY_EMAIL = 'thinktank@dafcgoc.org, nationalcgoc@gmail.com';
 
 var EXPERIENCE_LABELS = {
   none: 'No experience', minimal: 'Minimal', moderate: 'Moderate', experienced: 'Experienced'
 };
+var SELF_STUDY_LABELS = { true: 'Yes', false: 'No' };
 
 function syncSignups() {
   var props = PropertiesService.getScriptProperties();
@@ -70,12 +74,12 @@ function syncSignups() {
   if (sheet.getLastRow() === 0) {
     sheet.appendRow([
       'Submitted (UTC)', 'Rank', 'First name', 'Last name', 'Email',
-      'Research experience', 'Why research', 'Doc ID'
+      'Topic area', 'Self-study', 'Research experience', 'Why research', 'Doc ID'
     ]);
     sheet.setFrozenRows(1);
   }
 
-  var lastTs = watermark;
+  var mailError = null;
   results.forEach(function (r) {
     var docSnap = r.document;
     var data = unwrap({ mapValue: { fields: docSnap.fields } });
@@ -83,25 +87,33 @@ function syncSignups() {
     var createdAt = data.createdAt || '';
     var fullName = [name.rank, name.first, name.last].filter(Boolean).join(' ');
 
+    // Sheets reads a cell starting with = + - @ as a formula; sign-ups are public input
     sheet.appendRow([
       createdAt, name.rank || '', name.first || '', name.last || '',
       data.email || '',
+      data.topic || '',
+      SELF_STUDY_LABELS[data.selfStudy] || '',
       EXPERIENCE_LABELS[data.experience] || data.experience || '',
       data.interest || '',
       docSnap.name.split('/').pop()
-    ]);
+    ].map(function (v) { return /^[=+\-@]/.test(v) ? "'" + v : v; }));
+    // saved per row (results are oldest first) so a run that dies partway,
+    // at the 6-minute limit or on a Sheets error, never appends a row twice
+    props.setProperty('lastCreatedAt', createdAt);
 
-    MailApp.sendEmail({
-      to: NOTIFY_EMAIL,
-      subject: '[Think Tank] New sign-up — ' + fullName,
-      body: plainBody(data, name, ss),          // fallback for text-only clients
-      htmlBody: htmlBody(data, name, ss)
-    });
-
-    if (createdAt > lastTs) lastTs = createdAt;
+    try {
+      MailApp.sendEmail({
+        to: NOTIFY_EMAIL,
+        subject: '[Think Tank] New sign-up — ' + fullName,
+        body: plainBody(data, name, ss),          // fallback for text-only clients
+        htmlBody: htmlBody(data, name, ss)
+      });
+    } catch (e) {
+      mailError = mailError || e; // keep syncing the Sheet; fail the run after
+    }
   });
 
-  props.setProperty('lastCreatedAt', lastTs);
+  if (mailError) throw mailError;
 }
 
 /* ---------- formatted notification email ---------- */
@@ -110,6 +122,8 @@ function signupRows(data, name) {
   return [
     ['Name', [name.rank, name.first, name.last].filter(Boolean).join(' ')],
     ['Email', data.email || ''],
+    ['Topic area', data.topic || ''],
+    ['Self-study', SELF_STUDY_LABELS[data.selfStudy] || ''],
     ['Research experience', EXPERIENCE_LABELS[data.experience] || data.experience || ''],
     ['Why research', data.interest || ''],
     ['Submitted', (data.createdAt || '').replace('T', ' ').replace(/\..*$/, ' UTC')]

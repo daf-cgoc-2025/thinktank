@@ -17,7 +17,7 @@ visitor ──► index.html
                                      ▼
                       Apps Script poller (runs as nationalcgoc@gmail.com, every 15 min)
                          ├─► Google Sheet tab "Sign-ups" (one row per sign-up)
-                         └─► email notification → nationalcgoc@gmail.com
+                         └─► email notification → thinktank@dafcgoc.org + nationalcgoc@gmail.com
 ```
 
 - The browser writes to Firestore with the Firebase JS SDK (`firestore-lite`,
@@ -34,6 +34,8 @@ visitor ──► index.html
   `thinktank@dafcgoc.org`.
 - Sign-ups are readable only by dashboard super-admins and by the poller. The
   committee works from the Sheet.
+- Notifications go to thinktank@dafcgoc.org, the Squarespace email forward
+  Hugh set up: add or remove readers there, not in the script.
 - This page does not initialize App Check. Do not enforce App Check for
   Firestore (penpal SETUP §6) until it does, or every sign-up here is rejected.
 
