@@ -374,16 +374,52 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none;bor
 .success-check.play .check__tick{animation:dash .3s var(--ease) .4s forwards;}
 @keyframes dash{to{stroke-dashoffset:0;}}
 
-/* ---------- 9. Footer ---------- */
-.site-foot{position:relative;z-index:3;background:var(--ink);overflow:clip;padding-bottom:3rem;}
-.site-foot__mark{padding:clamp(2.5rem,6vw,4.5rem) var(--gutter) 0;max-width:calc(var(--container) + 2 * var(--gutter));
-  margin-inline:auto;}
-.site-foot__mark img{height:clamp(88px,8vw,120px);width:auto;}
-.site-foot__inner{display:grid;gap:1.25rem;justify-items:start;margin-top:clamp(1.5rem,3vw,2.5rem);}
-.site-foot__brand img{height:52px;width:auto;}
-.site-foot__links{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;}
-.site-foot__links a{display:inline-flex;align-items:center;min-height:44px;color:var(--text);}
-.site-foot__disclaimer,.site-foot__copy{font-size:.8125rem;line-height:1.6;color:var(--text-3);max-width:76ch;}
+/* ---------- 9. Footer: the hero's grid and glow, faint, to close the page ---------- */
+.site-foot{position:relative;z-index:3;isolation:isolate;overflow:clip;background:var(--ink);
+  padding:clamp(3.5rem,2.5rem + 4vw,6rem) 0 2.5rem;}
+.site-foot::before{content:"";position:absolute;inset:0;z-index:-1;
+  background-image:radial-gradient(55% 80% at 10% 0%,rgba(26,79,214,.3),transparent 70%),
+    linear-gradient(rgba(214,226,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(214,226,255,.04) 1px,transparent 1px);
+  background-size:auto,64px 64px,64px 64px;background-position:0 0,center top,center top;
+  -webkit-mask-image:radial-gradient(55% 85% at 8% 0%,#000 0%,transparent 75%);
+          mask-image:radial-gradient(55% 85% at 8% 0%,#000 0%,transparent 75%);}
+/* a hairline in the header's progress colors */
+.site-foot::after{content:"";position:absolute;inset:0 0 auto;height:1px;opacity:.55;
+  background:linear-gradient(90deg,transparent,var(--sky) 25%,var(--gold) 75%,transparent);}
+.site-foot__main{display:grid;gap:3rem;}
+@media (min-width:900px){.site-foot__main{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:4rem;}}
+.site-foot__home{display:inline-block;}
+.site-foot__home img{height:clamp(72px,30px + 6vw,96px);width:auto;}
+.site-foot__tag{margin-top:1.5rem;max-width:22ch;font-size:clamp(1.15rem,1rem + .5vw,1.4rem);font-weight:600;
+  letter-spacing:-.025em;line-height:1.2;color:var(--text);text-wrap:balance;}
+.site-foot__partner{margin-top:.9rem;display:flex;align-items:center;gap:.6rem;font-size:var(--fs-small);color:#C3CFEC;}
+.site-foot__partner::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);}
+.site-foot__nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2.5rem 2rem;}
+@media (min-width:640px){.site-foot__nav{grid-template-columns:repeat(3,minmax(0,1fr));}}
+.site-foot__col h2{margin-bottom:.5rem;font-size:var(--fs-small);font-weight:500;letter-spacing:0;line-height:1.4;
+  color:var(--text-3);}
+.site-foot__col ul{list-style:none;margin:0;padding:0;}
+.site-foot__col a,.site-foot__top{display:inline-flex;align-items:center;gap:.45rem;min-height:40px;
+  color:var(--text-2);font-size:.9375rem;text-decoration:none;transition:color .2s var(--ease);}
+.site-foot__parent img{height:36px;width:auto;}
+.site-foot__arrow{flex:none;width:.85em;height:.85em;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .2s var(--ease);}
+@media (hover:hover){
+  .site-foot__col a:hover,.site-foot__top:hover{color:#fff;}
+  .site-foot__col a:hover .site-foot__arrow{transform:translate(2px,-2px);}
+  .site-foot__top:hover .site-foot__arrow{transform:translateY(-2px);}
+}
+/* the rule spans the text column, not the gutters */
+.site-foot__base{display:grid;gap:.5rem 2rem;margin-top:clamp(3rem,2rem + 4vw,5rem);padding-top:1.25rem;
+  background:linear-gradient(var(--line-2),var(--line-2)) center top / calc(100% - 2 * var(--gutter)) 1px no-repeat;}
+.site-foot__copy,.site-foot__disclaimer{font-size:.8125rem;line-height:1.6;color:var(--text-3);max-width:76ch;}
+.site-foot__top{font-size:.8125rem;justify-self:start;}
+@media (min-width:720px){
+  .site-foot__base{grid-template-columns:1fr auto;align-items:center;}
+  .site-foot__top{justify-self:end;}
+  .site-foot__disclaimer{grid-column:1 / -1;}
+}
 
 /* ---------- Forced colors (Windows High Contrast) ---------- */
 @media (forced-colors:active){
