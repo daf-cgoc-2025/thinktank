@@ -285,8 +285,15 @@ html.js .say span.is-on{color:var(--text);}
 .join__inner{display:grid;gap:3rem;}
 .join h2{font-size:clamp(2rem,1.3rem + 2.8vw,3.4rem);letter-spacing:-.035em;line-height:1.02;color:#fff;}
 .join__text p{margin-top:1.5rem;max-width:34ch;font-size:var(--fs-lead);line-height:1.5;}
+.join__terms{margin:2.25rem 0 0;max-width:46ch;}
+.join__terms dt{font-size:var(--fs-small);font-weight:600;color:#fff;}
+.join__terms dd{margin:.35rem 0 1.25rem;font-size:.9375rem;line-height:1.55;color:#C3D1F5;}
+.join__terms dd:last-child{margin-bottom:0;}
 @media (min-width:960px){
   .join__inner{grid-template-columns:.9fr 1.1fr;gap:5rem;align-items:start;}
+}
+/* the text column stays in view only where the window is tall enough to show all of it */
+@media (min-width:960px) and (min-height:730px){
   .join__text{position:sticky;top:120px;}
 }
 
