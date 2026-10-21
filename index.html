@@ -259,6 +259,33 @@
               </div>
             </div>
 
+            <div class="field">
+              <label for="topic">Topic area <span class="req" aria-hidden="true">*</span></label>
+              <select id="topic" name="topic" required autocomplete="off">
+                <option value="" selected disabled>Select a topic area</option>
+                <option>China</option>
+                <option>Russia/Ukraine</option>
+                <option>Competition</option>
+                <option>Emerging Technology</option>
+                <option>AI/ML &amp; Automation</option>
+                <option>Airpower Concepts</option>
+                <option>Nuclear</option>
+                <option>Joint Warfighting</option>
+                <option>Whole of Society</option>
+                <option>Allies &amp; Partners</option>
+                <option>Talent Management</option>
+                <option>Leadership &amp; Decisions</option>
+                <option>No preference</option>
+              </select>
+              <p class="field-error" id="topic-error" aria-live="polite"></p>
+            </div>
+
+            <label class="check">
+              <input type="checkbox" name="selfStudy" id="self-study" class="sr-only">
+              <span class="check__box" aria-hidden="true"></span>
+              <span>I'd like to do self-study (with approval) instead of joining a cohort.</span>
+            </label>
+
             <fieldset class="fs" id="experience" aria-describedby="experience-hint">
               <legend>Research experience <span class="req" aria-hidden="true">*</span></legend>
               <p class="hint" id="experience-hint">It does not have to be military.</p>

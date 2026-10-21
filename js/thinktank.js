@@ -287,7 +287,9 @@
     return wrapLegend ? wrapLegend.textContent.replace(/\*/g, "").trim() : el.name;
   }
   function friendly(el) {
-    if (el.validity.valueMissing) return el.id === "rank" ? "Select your rank." : "This field is required.";
+    if (el.validity.valueMissing) {
+      return el.tagName === "SELECT" ? "Select your " + labelFor(el).toLowerCase() + "." : "This field is required.";
+    }
     if ((el.validity.typeMismatch || el.validity.patternMismatch) && el.type === "email") {
       return "Enter a valid email, e.g. name@us.af.mil";
     }
@@ -420,10 +422,12 @@
   function buildPayload() {
     var fd = new FormData(form);
     return {
-      schemaVersion: 1,
+      schemaVersion: 2,
       program: "DAF CGOC Think Tank",
       name: { rank: fd.get("rank"), first: fd.get("firstName").trim(), last: fd.get("lastName").trim() },
       email: fd.get("email").trim(),
+      topic: fd.get("topic"),
+      selfStudy: fd.get("selfStudy") === "on",
       experience: fd.get("experience"),
       interest: fd.get("interest").trim(),
       commitment: fd.get("commitment") === "on"
@@ -449,6 +453,8 @@
       "Rank: " + p.name.rank,
       "Name: " + p.name.first + " " + p.name.last,
       "Email: " + p.email,
+      "Topic area: " + p.topic,
+      "Self-study: " + (p.selfStudy ? "yes" : "no"),
       "Research experience: " + p.experience,
       "Why research: " + interest,
       "Commitment: agreed"

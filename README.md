@@ -34,6 +34,8 @@ visitor ──► index.html
   `thinktank@dafcgoc.org`.
 - Sign-ups are readable only by dashboard super-admins and by the poller. The
   committee works from the Sheet.
+- This page does not initialize App Check. Do not enforce App Check for
+  Firestore (penpal SETUP §6) until it does, or every sign-up here is rejected.
 
 ## Files
 
@@ -50,8 +52,8 @@ visitor ──► index.html
 
 The twelve topic areas were copied by hand from Air University's Research
 Topics page on 13 October 2026. Air University's list changes; when it does,
-edit the `<ol class="areas">` list in `index.html`. The page links to Air
-University's list as the current source.
+edit the `<ol class="areas">` list and the `#topic` options in `index.html`.
+The page links to Air University's list as the current source.
 
 ## Layout and motion
 
@@ -66,22 +68,26 @@ steps are a swipeable row.
 
 A field lives in three places that must agree: the input in `index.html`,
 `buildPayload()` in `js/thinktank.js`, and the `thinktankIntake` block in the
-penpal repo's `firestore.rules` (re-publish the rules after editing). Add the
-column in `apps-script/poller.gs` if the committee needs it in the Sheet.
+penpal repo's `firestore.rules`. Add the column in `apps-script/poller.gs` if
+the committee needs it in the Sheet.
+
+When the payload's shape changes, bump `schemaVersion` and let the rules accept
+the old version too until cached copies of the old page have aged out (Pages
+caches for 10 minutes; open tabs keep the old script). Publish rules from the
+penpal repo's `main`: Firebase console → Firestore → Rules, or the Rules REST
+API (`firebase deploy` needs the Service Usage Consumer role).
 
 ## One-time setup
 
-All signed in as nationalcgoc@gmail.com.
+All signed in as nationalcgoc@gmail.com. The rules are already published.
 
-1. Publish the rules from the penpal repo: Firebase console → Firestore →
-   Rules, or `firebase deploy --only firestore:rules`.
-2. Create a Google Sheet for the sign-ups. Extensions → Apps Script. In Project
+1. Create a Google Sheet for the sign-ups. Extensions → Apps Script. In Project
    Settings, show `appsscript.json` and replace it with
    `apps-script/appsscript.json`. Replace `Code.gs` with
    `apps-script/poller.gs`.
-3. Run `setup` once and accept the authorization prompts. It creates the
+2. Run `setup` once and accept the authorization prompts. It creates the
    15-minute trigger and runs the first sync.
-4. Share the Sheet with the Think Tank committee.
+3. Share the Sheet with the Think Tank committee.
 
 ## Going live
 
@@ -89,5 +95,6 @@ All signed in as nationalcgoc@gmail.com.
   `thinktank.dafcgoc.org`, and add the DNS record. Only one Pages site can claim
   the domain, so the dev repo carries no `CNAME`.
 - Remove `<meta name="robots" content="noindex, nofollow">` from `index.html`.
+- Drop the `schemaVersion == 1` branch from the `thinktankIntake` rules.
 - On the main site, change the Thinktank card in `pages/opportunities.html`
   from "Coming Soon" to live and point its buttons here.
