@@ -2,7 +2,8 @@
 
 Landing page and cohort sign-up for the DAF CGOC Think Tank. Dev repo:
 `daf-cgoc-2025/thinktank`, previewed at https://daf-cgoc-2025.github.io/thinktank/.
-Intended production address: https://thinktank.dafcgoc.org (not set up yet).
+Production repo: `dafcgoc-thinktank/thinktank`, served at
+https://thinktank.dafcgoc.org (unlisted until launch).
 
 Plain HTML, CSS, and JS on GitHub Pages. No build step. It follows the penpal
 site (`daf-cgoc-2025/penpal`) and shares its Firebase project.
@@ -91,12 +92,25 @@ All signed in as nationalcgoc@gmail.com. The rules are already published.
    15-minute trigger and runs the first sync.
 3. Share the Sheet with the Think Tank committee.
 
+## Production
+
+`dafcgoc-thinktank/thinktank` (public, branch build from `main`, HTTPS
+enforced) serves https://thinktank.dafcgoc.org. Its `main` is this repo's
+`main` plus one commit that adds `CNAME`. Only one Pages site can claim the
+domain, so this repo never carries a `CNAME`. Locally that history is the
+`prod` branch, pushed to the `prod` remote
+(`git@github.com:dafcgoc-thinktank/thinktank.git`). To deploy:
+
+```
+git fetch prod
+git checkout prod && git merge main && git push prod prod:main
+git checkout main
+```
+
 ## Going live
 
-- Create the production Pages site with a `CNAME` file containing
-  `thinktank.dafcgoc.org`, and add the DNS record. Only one Pages site can claim
-  the domain, so the dev repo carries no `CNAME`.
-- Remove `<meta name="robots" content="noindex, nofollow">` from `index.html`.
+- Remove `<meta name="robots" content="noindex, nofollow">` from `index.html`,
+  then deploy.
 - Drop the `schemaVersion == 1` branch from the `thinktankIntake` rules.
 - On the main site, change the Thinktank card in `pages/opportunities.html`
   from "Coming Soon" to live and point its buttons here.
