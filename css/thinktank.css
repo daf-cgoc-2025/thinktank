@@ -3,7 +3,7 @@
    Each section is its own surface and its own layout:
    hero (ultramarine field) → mission (one held screen) → topics
    (light sheet, index of areas) → process (held frame, steps travel
-   sideways) → join (blue sheet) → footer (wordmark).
+   sideways) → join (blue sheet) → footer (logo).
    ============================================================ */
 
 /* ---------- 0. Tokens ---------- */
@@ -88,7 +88,7 @@ main:focus,section:focus{outline:none;}
 .site-head__progress{position:absolute;left:26px;right:26px;bottom:-1px;height:2px;border-radius:2px;
   background:linear-gradient(90deg,var(--sky),var(--gold));transform:scaleX(var(--page,0));transform-origin:left;}
 .brand{display:inline-flex;align-items:center;min-height:44px;gap:.65rem;text-decoration:none;color:var(--text);margin-right:auto;}
-.brand img{height:30px;width:auto;}
+.brand img{height:36px;width:auto;}
 .brand__name{font-weight:600;font-size:1rem;letter-spacing:-.02em;}
 .site-nav{display:none;gap:2px;margin-right:.5rem;}
 .site-nav a{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 .95rem;border-radius:var(--pill);
@@ -369,9 +369,9 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none;bor
 
 /* ---------- 9. Footer ---------- */
 .site-foot{position:relative;z-index:3;background:var(--ink);overflow:clip;padding-bottom:3rem;}
-.site-foot__mark{margin:0;padding:clamp(2.5rem,6vw,4.5rem) var(--gutter) 0;font-size:clamp(2.6rem,1.4rem + 5.5vw,6rem);
-  font-weight:600;letter-spacing:-.045em;line-height:1;color:#1642B8;max-width:calc(var(--container) + 2 * var(--gutter));
+.site-foot__mark{padding:clamp(2.5rem,6vw,4.5rem) var(--gutter) 0;max-width:calc(var(--container) + 2 * var(--gutter));
   margin-inline:auto;}
+.site-foot__mark img{height:clamp(88px,8vw,120px);width:auto;}
 .site-foot__inner{display:grid;gap:1.25rem;justify-items:start;margin-top:clamp(1.5rem,3vw,2.5rem);}
 .site-foot__brand img{height:52px;width:auto;}
 .site-foot__links{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;}
