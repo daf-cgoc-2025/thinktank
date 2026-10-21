@@ -288,7 +288,7 @@
   }
   function friendly(el) {
     if (el.validity.valueMissing) return el.id === "rank" ? "Select your rank." : "This field is required.";
-    if (el.validity.typeMismatch && el.type === "email") {
+    if ((el.validity.typeMismatch || el.validity.patternMismatch) && el.type === "email") {
       return "Enter a valid email, e.g. name@us.af.mil";
     }
     return el.validationMessage || "Please check this field.";
@@ -337,6 +337,8 @@
 
   function validateField(el) {
     if (el.type === "radio" || el.type === "checkbox" || el.name === "botcheck") return true;
+    // the payload is trimmed, so an answer of only spaces counts as empty
+    if (el.required && !el.value.trim()) el.value = "";
     var ok = el.checkValidity();
     setFieldError(el, ok ? "" : friendly(el));
     return ok;
