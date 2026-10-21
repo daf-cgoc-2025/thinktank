@@ -98,12 +98,12 @@ All signed in as nationalcgoc@gmail.com. The rules are already published.
 enforced) serves https://thinktank.dafcgoc.org. Its `main` is this repo's
 `main` plus one commit that adds `CNAME`. Only one Pages site can claim the
 domain, so this repo never carries a `CNAME`. Locally that history is the
-`prod` branch, pushed to the `prod` remote
+`production` branch, pushed to the `prod` remote
 (`git@github.com:dafcgoc-thinktank/thinktank.git`). To deploy:
 
 ```
 git fetch prod
-git checkout prod && git merge main && git push prod prod:main
+git checkout production && git merge main && git push prod production:main
 git checkout main
 ```
 
